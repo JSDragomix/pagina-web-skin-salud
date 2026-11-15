@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SkinSalud | Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&amp;family=Playfair+Display:ital,wght@1,400;1,500&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" aria-label="SkinSalud - volver al inicio"><img src="imagenes/logo.jpeg" width="1776" height="592" alt="SkinSalud"></a>
+        </div>
+        <nav class="nav" aria-label="Navegación principal">
+            <ul>
+                <li class="aqui"><a href="index.html" aria-current="page">Inicio</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="tratamientos.html">Tratamientos</a></li>
+                <li><a href="contactos.html">Contactos</a></li>
+                <li><a href="opiniones.html">Opiniones</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" aria-label="Presentación">
+        <div class="content">
+            <h1>Innovación y restauración celular al servicio de tu bienestar</h1>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="mision">
+            <h2 class="titulo-seccion">Nuestra misión</h2>
+            <div class="mission-card">
+                <p>Lograr la recuperación integral de la salud cutánea de cada paciente mediante la evaluación detallada de su historial clínico, tratando las afecciones faciales y corporales como condiciones específicas.</p>
+            </div>
+        </section>
+
+        <section class="historia">
+            <div class="historia-text">
+                <span class="fecha">Desde el 15 de noviembre de 2016</span>
+                <h2 class="titulo-seccion">Nuestra historia</h2>
+                <h4>Iniciamos operaciones con un propósito claro: El cuidado integral de la piel. Hoy la organización cuenta con una trayectoria consolidada en el sector estético. Nos destacamos por ofrecer soluciones avanzadas en restauración celular y rejuvenecimiento, con un enfoque profesional, ético y humano.</h4>
+            </div>
+        </section>
+
+        <section class="galeria" aria-label="Galería de resultados">
+            <h2 class="titulo-seccion">Resultados que hablan por sí solos</h2>
+            <p class="subtitulo-seccion">Algunos de los cambios logrados por nuestros pacientes.</p>
+            <div class="carrusel" id="carrusel">
+                <button class="carrusel-btn prev" type="button" aria-label="Imagen anterior">&#8249;</button>
+                <div class="carrusel-track" id="carrusel-track">
+                <figure class="slide"><img src="imagenes/galeria1.jpeg" alt="Resultado de tratamiento de volumen en labios" loading="lazy"></figure>
+                <figure class="slide"><img src="imagenes/galeria2.jpeg" alt="Antes y después de tratamiento en la frente" loading="lazy"></figure>
+                <figure class="slide"><img src="imagenes/galeria3.jpeg" alt="Antes y después de rejuvenecimiento de manos" loading="lazy"></figure>
+                <figure class="slide"><img src="imagenes/galeria4.jpeg" alt="Tratamiento facial de limpieza y cuidado" loading="lazy"></figure>
+                <figure class="slide"><img src="imagenes/galeria5.jpeg" alt="Masaje corporal con aceites" loading="lazy"></figure>
+                <figure class="slide"><img src="imagenes/galeria6.jpeg" alt="Antes y después de tratamiento facial" loading="lazy"></figure>
+                </div>
+                <button class="carrusel-btn next" type="button" aria-label="Imagen siguiente">&#8250;</button>
+                <div class="carrusel-dots" id="carrusel-dots"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    (function () {
+        var track = document.getElementById('carrusel-track');
+        var dotsBox = document.getElementById('carrusel-dots');
+        var slides = track.querySelectorAll('.slide');
+        var prev = document.querySelector('.carrusel-btn.prev');
+        var next = document.querySelector('.carrusel-btn.next');
+        var timer = null;
+
+        function paso() {
+            var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+            return slides[0].offsetWidth + gap;
+        }
+        function indice() { return Math.round(track.scrollLeft / paso()); }
+        function ir(i) { track.scrollTo({ left: i * paso(), behavior: 'smooth' }); }
+        function alFinal() { return track.scrollLeft + track.clientWidth >= track.scrollWidth - 4; }
+
+        function siguiente() { if (alFinal()) { ir(0); } else { ir(indice() + 1); } }
+        function anterior() { if (track.scrollLeft <= 4) { ir(slides.length - 1); } else { ir(indice() - 1); } }
+
+        slides.forEach(function (_, i) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.setAttribute('aria-label', 'Ir a la imagen ' + (i + 1));
+            b.addEventListener('click', function () { ir(i); });
+            dotsBox.appendChild(b);
+        });
+        var dots = dotsBox.querySelectorAll('button');
+
+        function marcar() {
+            var i = alFinal() ? slides.length - 1 : indice();
+            dots.forEach(function (d, n) { d.classList.toggle('activo', n === i); });
+        }
+        track.addEventListener('scroll', function () { window.requestAnimationFrame(marcar); });
+        window.addEventListener('resize', marcar);
+        marcar();
+
+        next.addEventListener('click', function () { siguiente(); reiniciar(); });
+        prev.addEventListener('click', function () { anterior(); reiniciar(); });
+
+        function iniciar() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            detener();
+            timer = setInterval(siguiente, 4500);
+        }
+        function detener() { if (timer) { clearInterval(timer); timer = null; } }
+        function reiniciar() { detener(); iniciar(); }
+
+        var caja = document.getElementById('carrusel');
+        caja.addEventListener('mouseenter', detener);
+        caja.addEventListener('mouseleave', iniciar);
+        caja.addEventListener('focusin', detener);
+        caja.addEventListener('focusout', iniciar);
+        caja.addEventListener('touchstart', detener, { passive: true });
+        caja.addEventListener('touchend', iniciar, { passive: true });
+        iniciar();
+    })();
+    </script>
+
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-uni">
+                <img src="imagenes/logo_universidad.png" width="84" height="84" alt="Logo de la Universidad Politécnica Territorial Andrés Eloy Blanco (UPTAEB)">
+                <p class="footer-uni-nombre">Universidad Politécnica Territorial<br>"Andrés Eloy Blanco"</p>
+            </div>
+
+            <div class="footer-lema">
+                <p>Centro estético dedicado al cuidado de tu piel y bienestar.</p>
+
+                <ul>
+                    <li class="regresar"><a href="index.html">Regresar</a></li>
+                </ul>
+            </div>
+
+            <nav class="footer-col" aria-label="Enlaces rápidos">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li class="aqui-yo">Inicio</li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="tratamientos.html">Tratamientos</a></li>
+                    <li><a href="opiniones.html">Opiniones</a></li>
+                    <li><a href="contactos.html">Contactos</a></li>
+                </ul>
+            </nav>
+
+            <div class="footer-col">
+                <h3>Desarrolladores</h3>
+                <ul>
+                    <li>Johanny González | C.I: 32.745.567</li>
+                    <li>Samuel Mendoza | C.I: 32.667.989</li>
+                </ul>   
+                <h3>Tutor asesor</h3>
+                <ul>
+                    <li>Ing. Hilario Ortiz</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 SkinSalud. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
