@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SkinSalud | Opiniones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&amp;family=Playfair+Display:ital,wght@1,400;1,500&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/opiniones.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" aria-label="SkinSalud - volver al inicio"><img src="imagenes/logo.jpeg" width="1776" height="592" alt="SkinSalud"></a>
+        </div>
+        <nav class="nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="tratamientos.html">Tratamientos</a></li>
+                <li><a href="contactos.html">Contactos</a></li>
+                <li class="aqui"><a href="opiniones.html" aria-current="page">Opiniones</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="opiniones-seccion">
+        <section class="bloque">
+            <h2 class="titulo-seccion">Tu opinión nos importa</h2>
+            <p class="subtitulo-seccion">Cuéntanos cómo fue tu experiencia o qué podemos mejorar. Leemos cada mensaje.</p>
+            <p class="mensaje-envio" id="mensaje-envio" role="status" aria-live="polite" hidden></p>
+
+            <form id="form-opinion" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="589e05e4-12f1-4402-ba97-aeb3d67ecde8">
+                <textarea name="message" placeholder="Escribe tu opinión" aria-label="Tu comentario" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+
+        <section class="bloque">
+            <h2 class="titulo-seccion">Lo que dicen de nosotros</h2>
+            <p class="subtitulo-seccion">Experiencias reales de quienes confiaron en SkinSalud.</p>
+
+            <div class="testimonios-grid">
+            <article class="testimonio">
+                <div class="estrellas" aria-label="5 de 5 estrellas">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testimonio-texto">Excelente atención y profesionalismo. Los tratamientos de restauración celular superaron mis expectativas. ¡100 % recomendados en Quíbor!</p>
+                <p class="testimonio-autor"></p>
+            </article>
+
+            <article class="testimonio">
+                <div class="estrellas" aria-label="5 de 5 estrellas">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testimonio-texto">Vine por masajes terapéuticos postoperatorios y mi recuperación ha sido excelente. Un ambiente limpio, cálido y profesional.</p>
+                <p class="testimonio-autor"></p>
+            </article>
+
+            <article class="testimonio">
+                <div class="estrellas" aria-label="5 de 5 estrellas">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="testimonio-texto">¡Me encanta este centro estético! Desde que entras se siente un ambiente de paz y profesionalismo. ¡Mi piel lo agradece!</p>
+                <p class="testimonio-autor"></p>
+            </article>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        var form = document.getElementById('form-opinion');
+        var aviso = document.getElementById('mensaje-envio');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var boton = form.querySelector('button[type="submit"]');
+            boton.disabled = true;
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json' },
+                body: new FormData(form)
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (datos) {
+                if (!datos.success) { throw new Error('envio'); }
+                aviso.textContent = 'Tu mensaje fue enviado exitosamente de forma privada.';
+                aviso.className = 'mensaje-envio';
+                form.reset();
+            })
+            .catch(function () {
+                aviso.textContent = 'No se pudo enviar tu mensaje. Inténtalo de nuevo.';
+                aviso.className = 'mensaje-envio error';
+            })
+            .then(function () {
+                aviso.hidden = false;
+                boton.disabled = false;
+            });
+        });
+    </script>
+
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-uni">
+                <img src="imagenes/logo_universidad.png" width="84" height="84" alt="Logo de la Universidad Politécnica Territorial Andrés Eloy Blanco (UPTAEB)">
+                <p class="footer-uni-nombre">Universidad Politécnica Territorial<br>"Andrés Eloy Blanco"</p>
+            </div>
+
+            <div class="footer-lema">
+                <p>Centro estético dedicado al cuidado de tu piel y bienestar.</p>
+
+                <ul>
+                    <li class="regresar"><a href="opiniones.html">Regresar</a></li>
+                </ul>
+            </div>
+
+            <nav class="footer-col" aria-label="Enlaces rápidos">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="tratamientos.html">Tratamientos</a></li>
+                    <li class="aqui-yo">Opiniones</li>
+                    <li><a href="contactos.html">Contactos</a></li>
+                </ul>
+            </nav>
+
+            <div class="footer-col">
+                <h3>Desarrolladores</h3>
+                <ul>
+                    <li>Johanny González | C.I: 32.745.567</li>
+                    <li>Samuel Mendoza | C.I: 32.667.989</li>
+                </ul>   
+                <h3>Tutor asesor</h3>
+                <ul>
+                    <li>Ing. Hilario Ortiz</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 SkinSalud. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
