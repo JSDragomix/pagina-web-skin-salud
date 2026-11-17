@@ -247,7 +247,7 @@ img { max-width: 100%; height: auto; }
 
 .footer-lema .regresar {
   display: inline-block;
-  background-color: var(--azul-activo);
+  background-color: white;
   padding: 3px 20px;
   border-radius: 999px;
   font-family: var(--font-texto);
@@ -276,14 +276,18 @@ img { max-width: 100%; height: auto; }
   transition: color 0.2s ease;
 }
 
+.regresar a {
+  color: var(--verde-oscuro);
+}
+
 .footer a:hover { color: #9dffb0; text-decoration: underline; }
 
 /* Enlace de la página actual: azul */
 .footer li.aqui-yo ,
 .footer li.aqui-yo :hover {
   display: inline-block;
-  background-color: var(--azul-activo);
-  color: #ffffff;
+  background-color: white;
+  color: var(--verde-oscuro);
   font-weight: 700;
   padding: 0 10px;
   border-radius: 999px;
