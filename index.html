@@ -51,80 +51,50 @@
         <section class="galeria" aria-label="Galería de resultados">
             <h2 class="titulo-seccion">Resultados que hablan por sí solos</h2>
             <p class="subtitulo-seccion">Algunos de los cambios logrados por nuestros pacientes.</p>
-            <div class="carrusel" id="carrusel">
-                <button class="carrusel-btn prev" type="button" aria-label="Imagen anterior">&#8249;</button>
-                <div class="carrusel-track" id="carrusel-track">
-                <figure class="slide"><img src="imagenes/galeria1.jpeg" alt="Resultado de tratamiento de volumen en labios" loading="lazy"></figure>
-                <figure class="slide"><img src="imagenes/galeria2.jpeg" alt="Antes y después de tratamiento en la frente" loading="lazy"></figure>
-                <figure class="slide"><img src="imagenes/galeria3.jpeg" alt="Antes y después de rejuvenecimiento de manos" loading="lazy"></figure>
-                <figure class="slide"><img src="imagenes/galeria4.jpeg" alt="Tratamiento facial de limpieza y cuidado" loading="lazy"></figure>
-                <figure class="slide"><img src="imagenes/galeria5.jpeg" alt="Masaje corporal con aceites" loading="lazy"></figure>
-                <figure class="slide"><img src="imagenes/galeria6.jpeg" alt="Antes y después de tratamiento facial" loading="lazy"></figure>
+            <div class="carrusel">
+                <input type="radio" name="carrusel" id="slide-1" class="carrusel-radio" checked>
+                <input type="radio" name="carrusel" id="slide-2" class="carrusel-radio">
+                <input type="radio" name="carrusel" id="slide-3" class="carrusel-radio">
+                <input type="radio" name="carrusel" id="slide-4" class="carrusel-radio">
+                <input type="radio" name="carrusel" id="slide-5" class="carrusel-radio">
+                <input type="radio" name="carrusel" id="slide-6" class="carrusel-radio">
+                <div class="carrusel-ventana">
+                    <div class="carrusel-track">
+                        <figure class="slide"><img src="imagenes/galeria1.jpeg" alt="Resultado de tratamiento de volumen en labios" loading="lazy"></figure>
+                        <figure class="slide"><img src="imagenes/galeria2.jpeg" alt="Antes y después de tratamiento en la frente" loading="lazy"></figure>
+                        <figure class="slide"><img src="imagenes/galeria3.jpeg" alt="Antes y después de rejuvenecimiento de manos" loading="lazy"></figure>
+                        <figure class="slide"><img src="imagenes/galeria4.jpeg" alt="Tratamiento facial de limpieza y cuidado" loading="lazy"></figure>
+                        <figure class="slide"><img src="imagenes/galeria5.jpeg" alt="Masaje corporal con aceites" loading="lazy"></figure>
+                        <figure class="slide"><img src="imagenes/galeria6.jpeg" alt="Antes y después de tratamiento facial" loading="lazy"></figure>
+                    </div>
+                   <!-- Flechas para slide 1 -->
+        <label for="slide-6" class="flecha prev nav-s1" aria-label="Anterior">&#10094;</label>
+        <label for="slide-2" class="flecha next nav-s1" aria-label="Siguiente">&#10095;</label>
+
+        <!-- Flechas para slide 2 -->
+        <label for="slide-1" class="flecha prev nav-s2" aria-label="Anterior">&#10094;</label>
+        <label for="slide-3" class="flecha next nav-s2" aria-label="Siguiente">&#10095;</label>
+
+        <!-- Flechas para slide 3 -->
+        <label for="slide-2" class="flecha prev nav-s3" aria-label="Anterior">&#10094;</label>
+        <label for="slide-4" class="flecha next nav-s3" aria-label="Siguiente">&#10095;</label>
+
+        <!-- Flechas para slide 4 -->
+        <label for="slide-3" class="flecha prev nav-s4" aria-label="Anterior">&#10094;</label>
+        <label for="slide-5" class="flecha next nav-s4" aria-label="Siguiente">&#10095;</label>
+
+        <!-- Flechas para slide 5 -->
+        <label for="slide-4" class="flecha prev nav-s5" aria-label="Anterior">&#10094;</label>
+        <label for="slide-6" class="flecha next nav-s5" aria-label="Siguiente">&#10095;</label>
+
+        <!-- Flechas para slide 6 -->
+        <label for="slide-5" class="flecha prev nav-s6" aria-label="Anterior">&#10094;</label>
+        <label for="slide-1" class="flecha next nav-s6" aria-label="Siguiente">&#10095;</label>
                 </div>
-                <button class="carrusel-btn next" type="button" aria-label="Imagen siguiente">&#8250;</button>
-                <div class="carrusel-dots" id="carrusel-dots"></div>
             </div>
         </section>
     </main>
 
-    <script>
-    (function () {
-        var track = document.getElementById('carrusel-track');
-        var dotsBox = document.getElementById('carrusel-dots');
-        var slides = track.querySelectorAll('.slide');
-        var prev = document.querySelector('.carrusel-btn.prev');
-        var next = document.querySelector('.carrusel-btn.next');
-        var timer = null;
-
-        function paso() {
-            var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-            return slides[0].offsetWidth + gap;
-        }
-        function indice() { return Math.round(track.scrollLeft / paso()); }
-        function ir(i) { track.scrollTo({ left: i * paso(), behavior: 'smooth' }); }
-        function alFinal() { return track.scrollLeft + track.clientWidth >= track.scrollWidth - 4; }
-
-        function siguiente() { if (alFinal()) { ir(0); } else { ir(indice() + 1); } }
-        function anterior() { if (track.scrollLeft <= 4) { ir(slides.length - 1); } else { ir(indice() - 1); } }
-
-        slides.forEach(function (_, i) {
-            var b = document.createElement('button');
-            b.type = 'button';
-            b.setAttribute('aria-label', 'Ir a la imagen ' + (i + 1));
-            b.addEventListener('click', function () { ir(i); });
-            dotsBox.appendChild(b);
-        });
-        var dots = dotsBox.querySelectorAll('button');
-
-        function marcar() {
-            var i = alFinal() ? slides.length - 1 : indice();
-            dots.forEach(function (d, n) { d.classList.toggle('activo', n === i); });
-        }
-        track.addEventListener('scroll', function () { window.requestAnimationFrame(marcar); });
-        window.addEventListener('resize', marcar);
-        marcar();
-
-        next.addEventListener('click', function () { siguiente(); reiniciar(); });
-        prev.addEventListener('click', function () { anterior(); reiniciar(); });
-
-        function iniciar() {
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            detener();
-            timer = setInterval(siguiente, 4500);
-        }
-        function detener() { if (timer) { clearInterval(timer); timer = null; } }
-        function reiniciar() { detener(); iniciar(); }
-
-        var caja = document.getElementById('carrusel');
-        caja.addEventListener('mouseenter', detener);
-        caja.addEventListener('mouseleave', iniciar);
-        caja.addEventListener('focusin', detener);
-        caja.addEventListener('focusout', iniciar);
-        caja.addEventListener('touchstart', detener, { passive: true });
-        caja.addEventListener('touchend', iniciar, { passive: true });
-        iniciar();
-    })();
-    </script>
 
     <footer class="footer">
         <div class="footer-contenedor">

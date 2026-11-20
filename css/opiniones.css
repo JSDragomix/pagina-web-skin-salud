@@ -1,5 +1,3 @@
-/* ===== OPINIONES ===== */
-
 body { background-color: #f2f7f4; }
 
 .opiniones-seccion {
@@ -10,7 +8,6 @@ body { background-color: #f2f7f4; }
 
 .bloque + .bloque { margin-top: 56px; }
 
-/* Aviso de envío (debajo del título) */
 .mensaje-envio {
   max-width: 440px;
   margin: 0 auto 4px;
@@ -26,7 +23,6 @@ body { background-color: #f2f7f4; }
 .mensaje-envio[hidden] { display: none; }
 .mensaje-envio.error { color: #8a1c1c; background: #fdecec; border-color: #e07070; }
 
-/* Formulario del buzón */
 form {
   display: flex;
   flex-direction: column;
@@ -74,7 +70,6 @@ form button[type="submit"] {
 }
 form button[type="submit"]:hover { background-color: var(--verde-oscuro); transform: translateY(-1px); }
 
-/* Testimonios (tarjetas compactas) */
 .testimonios-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

@@ -33,10 +33,10 @@
                 <p>Tu piel es única, por eso diseñamos soluciones personalizadas para devolverle su frescura natural.</p>
             </div>
 
-            <form class="booking-grid" onsubmit="return false">
+            <form class="booking-grid">
                 <div class="services-list">
                 <label class="service-option">
-                    <input type="radio" name="servicio" value="relajante" checked data-img="imagenes/masaje.jpeg">
+                    <input type="radio" name="servicio" value="relajante" checked>
                     <div class="service-info">
                         <h3>Masajes relajantes <span class="precio">30</span></h3>
                         <p>Técnicas suaves para reducir el estrés e inducir calma profunda.</p>
@@ -44,7 +44,7 @@
                 </label>
 
                 <label class="service-option">
-                    <input type="radio" name="servicio" value="terapeutico" data-img="imagenes/terapeutico.jpeg" data-title="Masajes terapéuticos">
+                    <input type="radio" name="servicio" value="terapeutico">
                     <div class="service-info">
                         <h3>Masajes terapéuticos <span class="precio">35</span></h3>
                         <p>Alivio de tensiones musculares focalizadas y dolores acumulados.</p>
@@ -52,7 +52,7 @@
                 </label>
 
                 <label class="service-option">
-                    <input type="radio" name="servicio" value="linfatico" data-img="imagenes/drenaje.jpeg" data-title="Drenajes linfáticos">
+                    <input type="radio" name="servicio" value="linfatico">
                     <div class="service-info">
                         <h3>Drenajes linfáticos <span class="precio">35</span></h3>
                         <p>Estimula la circulación y la eliminación de toxinas corporales.</p>
@@ -60,7 +60,7 @@
                 </label>
 
                 <label class="service-option">
-                    <input type="radio" name="servicio" value="limpieza" data-img="imagenes/limpieza.jpeg" data-title="Limpieza facial">
+                    <input type="radio" name="servicio" value="limpieza">
                     <div class="service-info">
                         <h3>Limpieza facial <span class="precio">25</span></h3>
                         <p>Tratamiento profundo para revitalizar y purificar la piel del rostro.</p>
@@ -69,8 +69,10 @@
                 </div>
 
                 <div class="image-preview-panel">
-                    <img id="dynamic-image" src="imagenes/masaje.jpeg" alt="Servicio seleccionado">
-                    <div class="image-caption" id="dynamic-caption">Masajes relajantes</div>
+                    <figure class="preview preview-relajante"><img src="imagenes/masaje.jpeg" alt="Masajes relajantes"><figcaption class="image-caption">Masajes relajantes</figcaption></figure>
+                    <figure class="preview preview-terapeutico"><img src="imagenes/terapeutico.jpeg" alt="Masajes terapéuticos"><figcaption class="image-caption">Masajes terapéuticos</figcaption></figure>
+                    <figure class="preview preview-linfatico"><img src="imagenes/drenaje.jpeg" alt="Drenajes linfáticos"><figcaption class="image-caption">Drenajes linfáticos</figcaption></figure>
+                    <figure class="preview preview-limpieza"><img src="imagenes/limpieza.jpeg" alt="Limpieza facial"><figcaption class="image-caption">Limpieza facial</figcaption></figure>
                 </div>
             </form>
 
@@ -78,24 +80,6 @@
         </div>
     </main>
 
-    <script>
-        var radios = document.querySelectorAll('input[name="servicio"]');
-        var img = document.getElementById('dynamic-image');
-        var cap = document.getElementById('dynamic-caption');
-
-        radios.forEach(function (radio) {
-            radio.addEventListener('change', function (e) {
-                var t = e.target;
-                img.style.opacity = '0';
-                setTimeout(function () {
-                    img.src = t.getAttribute('data-img');
-                    img.alt = t.getAttribute('data-title');
-                    cap.textContent = t.getAttribute('data-title');
-                    img.style.opacity = '1';
-                }, 200);
-            });
-        });
-    </script>
 
     <footer class="footer">
         <div class="footer-contenedor">

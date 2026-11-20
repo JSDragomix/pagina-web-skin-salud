@@ -30,7 +30,6 @@
         <section class="bloque">
             <h2 class="titulo-seccion">Tu opinión nos importa</h2>
             <p class="subtitulo-seccion">Cuéntanos cómo fue tu experiencia o qué podemos mejorar. Leemos cada mensaje.</p>
-            <p class="mensaje-envio" id="mensaje-envio" role="status" aria-live="polite" hidden></p>
 
             <form id="form-opinion" action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="589e05e4-12f1-4402-ba97-aeb3d67ecde8">
@@ -65,37 +64,6 @@
         </section>
     </main>
 
-    <script>
-        var form = document.getElementById('form-opinion');
-        var aviso = document.getElementById('mensaje-envio');
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            var boton = form.querySelector('button[type="submit"]');
-            boton.disabled = true;
-
-            fetch(form.action, {
-                method: 'POST',
-                headers: { 'Accept': 'application/json' },
-                body: new FormData(form)
-            })
-            .then(function (r) { return r.json(); })
-            .then(function (datos) {
-                if (!datos.success) { throw new Error('envio'); }
-                aviso.textContent = 'Tu mensaje fue enviado exitosamente de forma privada.';
-                aviso.className = 'mensaje-envio';
-                form.reset();
-            })
-            .catch(function () {
-                aviso.textContent = 'No se pudo enviar tu mensaje. Inténtalo de nuevo.';
-                aviso.className = 'mensaje-envio error';
-            })
-            .then(function () {
-                aviso.hidden = false;
-                boton.disabled = false;
-            });
-        });
-    </script>
 
     <footer class="footer">
         <div class="footer-contenedor">
